@@ -164,26 +164,23 @@ public class Controller implements Initializable {
         Stage changeNameWindow = new Stage();
         changeNameWindow.initModality(Modality.APPLICATION_MODAL);
         changeNameWindow.setTitle("Change name");
-
-
         Label label = new Label("Enter Name:");
         TextField inputField = new TextField();
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(e -> {
             String userInput = inputField.getText();
             changeNameWindow.close();
-            Platform.runLater(() -> {
+
                 if(currentSelectItem.getValue() instanceof Item && userInput!=null){
                     Item item = (Item)currentSelectItem.getValue();
                     item.setName(userInput);
                     //this refreshed the treeItem and make the changes appear immediately
-
                     currentSelectItem.setValue(null);
                     currentSelectItem.setValue(item);
                     //this would update the display value
                     selectItem();
                 }
-            });
+
 
         });
 
