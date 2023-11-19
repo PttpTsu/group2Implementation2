@@ -1,13 +1,16 @@
 package group2.group2remake;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -91,7 +94,15 @@ public class Controller implements Initializable {
             if(item.getValue() instanceof Item){
                 //clear the option first then adding new item
                 optionList.getItems().clear();
-                optionList.getItems().addAll("Add Item", "Change X", "Change Y","Change Width","Change Height","Change Price","Delete Item");
+                optionList.getItems().addAll("Change Name","Add Item", "Change X", "Change Y","Change Width","Change Height","Change Price","Delete Item");
+                Item displayUpdate = (Item)item.getValue();
+                this.nameDisplay.setText(displayUpdate.getName());
+                this.xDisplay.setText(String.valueOf(displayUpdate.getxCord()));
+                this.yDisplay.setText(String.valueOf(displayUpdate.getyCord()));
+                this.widthDisplay.setText(String.valueOf(displayUpdate.getWidth()));
+                this.heightDisplay.setText(String.valueOf(displayUpdate.getHeight()));
+                this.priceDisplay.setText(String.valueOf(displayUpdate.getPrice()));
+
             }
 
         }
@@ -137,6 +148,7 @@ public class Controller implements Initializable {
             case "Delete Item":
                 deleteItem();
                 break;
+
             default:
                 // Handle default case or do nothing
                 break;
@@ -149,8 +161,39 @@ public class Controller implements Initializable {
         //thses function below requires a pop window that retrieve one input value from the user
         //they will closed upon user finish enter the input
     public void changeName() {
+        Stage changeNameWindow = new Stage();
+        changeNameWindow.initModality(Modality.APPLICATION_MODAL);
+        changeNameWindow.setTitle("Change name");
 
-        // Logic to change the name
+
+        Label label = new Label("Enter Name:");
+        TextField inputField = new TextField();
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            String userInput = inputField.getText();
+            changeNameWindow.close();
+            Platform.runLater(() -> {
+                if(currentSelectItem.getValue() instanceof Item && userInput!=null){
+                    Item item = (Item)currentSelectItem.getValue();
+                    item.setName(userInput);
+                    //this refreshed the treeItem and make the changes appear immediately
+
+                    currentSelectItem.setValue(null);
+                    currentSelectItem.setValue(item);
+                    //this would update the display value
+                    selectItem();
+                }
+            });
+
+        });
+
+        VBox layout = new VBox(10, label, inputField, submitButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 250, 150);
+        changeNameWindow.setScene(scene);
+        changeNameWindow.showAndWait();
+
     }
 
     public void changePrice() {

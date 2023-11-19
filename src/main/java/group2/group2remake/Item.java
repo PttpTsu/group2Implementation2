@@ -60,6 +60,26 @@ public class Item {
         this.height = height;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public void setxCord(double xCord) {
+        this.xCord = xCord;
+    }
+
+    public void setyCord(double yCord) {
+        this.yCord = yCord;
+    }
+
     @Override
     public String toString() {
         return this.name;
