@@ -195,20 +195,164 @@ public class Controller implements Initializable {
 
     public void changePrice() {
         // Logic to change the price
+        Stage changePriceWindow = new Stage();
+        changePriceWindow.initModality(Modality.APPLICATION_MODAL);
+        changePriceWindow.setTitle("Change Price");
+        Label label = new Label("Enter Price:");
+        TextField inputField = new TextField();
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            String userInput = inputField.getText();
+            changePriceWindow.close();
+
+            if(currentSelectItem.getValue() instanceof Item && userInput!=null){
+                Item item = (Item)currentSelectItem.getValue();
+                item.setPrice(Double.parseDouble(userInput));
+                //this refreshed the treeItem and make the changes appear immediately
+                currentSelectItem.setValue(null);
+                currentSelectItem.setValue(item);
+                //this would update the display value
+                selectItem();
+            }
+
+
+        });
+
+        VBox layout = new VBox(10, label, inputField, submitButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 250, 150);
+        changePriceWindow.setScene(scene);
+        changePriceWindow.showAndWait();
     }
 
     public void changeX() {
         // Logic to change X
+        Stage changeXWindow = new Stage();
+        changeXWindow.initModality(Modality.APPLICATION_MODAL);
+        changeXWindow.setTitle("Change X coordinate");
+        Label label = new Label("Enter x coordinate:");
+        TextField inputField = new TextField();
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            String userInput = inputField.getText();
+            changeXWindow.close();
+
+            if(currentSelectItem.getValue() instanceof Item && userInput!=null){
+                Item item = (Item)currentSelectItem.getValue();
+                item.setxCord(Double.parseDouble(userInput));
+                //this refreshed the treeItem and make the changes appear immediately
+                currentSelectItem.setValue(null);
+                currentSelectItem.setValue(item);
+                //this would update the display value
+                selectItem();
+            }
+
+
+        });
+
+        VBox layout = new VBox(10, label, inputField, submitButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 250, 150);
+        changeXWindow.setScene(scene);
+        changeXWindow.showAndWait();
     }
     public void changeY(){
+        // Logic to change Y
+        Stage chnageYWindow = new Stage();
+        chnageYWindow.initModality(Modality.APPLICATION_MODAL);
+        chnageYWindow.setTitle("Change Y coordinate");
+        Label label = new Label("Enter Y coordinate:");
+        TextField inputField = new TextField();
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            String userInput = inputField.getText();
+            chnageYWindow.close();
 
+            if(currentSelectItem.getValue() instanceof Item && userInput!=null){
+                Item item = (Item)currentSelectItem.getValue();
+                item.setyCord(Double.parseDouble(userInput));
+                //this refreshed the treeItem and make the changes appear immediately
+                currentSelectItem.setValue(null);
+                currentSelectItem.setValue(item);
+                //this would update the display value
+                selectItem();
+            }
+
+
+        });
+
+        VBox layout = new VBox(10, label, inputField, submitButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 250, 150);
+        chnageYWindow.setScene(scene);
+        chnageYWindow.showAndWait();
     }
 
     public void changeWidth(){
+        Stage changeWidthWindow = new Stage();
+        changeWidthWindow.initModality(Modality.APPLICATION_MODAL);
+        changeWidthWindow.setTitle("Change Y coordinate");
+        Label label = new Label("Enter Y coordinate:");
+        TextField inputField = new TextField();
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            String userInput = inputField.getText();
+            changeWidthWindow.close();
+
+            if(currentSelectItem.getValue() instanceof Item && userInput!=null){
+                Item item = (Item)currentSelectItem.getValue();
+                item.setWidth(Double.parseDouble(userInput));
+                //this refreshed the treeItem and make the changes appear immediately
+                currentSelectItem.setValue(null);
+                currentSelectItem.setValue(item);
+                //this would update the display value
+                selectItem();
+            }
+
+
+        });
+
+        VBox layout = new VBox(10, label, inputField, submitButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 250, 150);
+        changeWidthWindow.setScene(scene);
+        changeWidthWindow.showAndWait();
 
     }
     public void changeHeight(){
+        Stage changeHeightWindow = new Stage();
+        changeHeightWindow.initModality(Modality.APPLICATION_MODAL);
+        changeHeightWindow.setTitle("Change Y coordinate");
+        Label label = new Label("Enter Y coordinate:");
+        TextField inputField = new TextField();
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            String userInput = inputField.getText();
+            changeHeightWindow.close();
 
+            if(currentSelectItem.getValue() instanceof Item && userInput!=null){
+                Item item = (Item)currentSelectItem.getValue();
+                item.setHeight(Double.parseDouble(userInput));
+                //this refreshed the treeItem and make the changes appear immediately
+                currentSelectItem.setValue(null);
+                currentSelectItem.setValue(item);
+                //this would update the display value
+                selectItem();
+            }
+
+
+        });
+
+        VBox layout = new VBox(10, label, inputField, submitButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 250, 150);
+        changeHeightWindow.setScene(scene);
+        changeHeightWindow.showAndWait();
     }
     //thses function above requires a pop window that retrieve one input value from the user
 
