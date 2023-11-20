@@ -1,6 +1,5 @@
 package group2.group2remake;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -8,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -18,14 +18,16 @@ import java.util.ResourceBundle;
 
 
 
-//the center coordinates of visualization is x= 337, y = 325 make it as the origin(0,0)
+//the center coordinates of visualization is x= 342, y = 328 make it as the origin(0,0)
 
 //range of grid image lay out is x= 14, y = 0, to x = 653, y = 642
+//the range of x is -333 to 333, or for layout is 9 to 661
+//the range of y is -333 to 333, or for layout is -2 to 650
 public class Controller implements Initializable {
     @FXML
     private TreeView assetTree;
     @FXML
-    private AnchorPane visualAnchor;
+    private AnchorPane visualAchor;
 
     //display variables
     @FXML
@@ -47,34 +49,19 @@ public class Controller implements Initializable {
     private ListView optionList;
 
     private TreeItem currentSelectItem;
-
-
-
-    //a list of value will be used if user adding new item
-    //if you are using a pops up window that have a different controller
-    //then it could be static and it can only use these static value to retrive user's input
-    public static double x;
-    public static double y;
-    public static double price;
-    public static double width;
-    public static double height;
-    public static String name;
-    //end of the list
-
+    private Item lastItem;
 
 
 
     //initialize the interface
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Root root = new Root();
+        Item root = new Item("root",0,0,100,100,0);
+        root.setDefaultColor(Color.GREEN);
         TreeItem rootItem = new TreeItem(root);
-        Item i = new Item("item",10,10,10,10,10);
-        TreeItem testItem = new TreeItem(i);
-        rootItem.getChildren().add(testItem);
-
         assetTree.setRoot(rootItem);
+        visualAchor.getChildren().add(root.getRect());
+        visualAchor.getChildren().add(root.getItemLable());
 
     }
 
@@ -83,15 +70,20 @@ public class Controller implements Initializable {
     public void selectItem(){
         TreeItem item = (TreeItem)assetTree.getSelectionModel().getSelectedItem();
         if(item!=null){
-            System.out.println(item.getValue().getClass().toString());
+            if (lastItem != null) {
+                lastItem.restoreColor();
+            }
+
+           lastItem = (Item)item.getValue();
+            lastItem.getRect().setStroke(Color.BLUE);
             this.currentSelectItem=item;
-            if(item.getValue() instanceof Root){
+            if(item.equals(assetTree.getRoot())){
                 //clear the option first then adding new item
                 optionList.getItems().clear();
                 optionList.getItems().addAll("Add Item", "Change X", "Change Y","Change Width","Change Height");
 
             }
-            if(item.getValue() instanceof Item){
+            else if(item.getValue() instanceof Item){
                 //clear the option first then adding new item
                 optionList.getItems().clear();
                 optionList.getItems().addAll("Change Name","Add Item", "Change X", "Change Y","Change Width","Change Height","Change Price","Delete Item");
@@ -294,14 +286,13 @@ public class Controller implements Initializable {
     public void changeWidth(){
         Stage changeWidthWindow = new Stage();
         changeWidthWindow.initModality(Modality.APPLICATION_MODAL);
-        changeWidthWindow.setTitle("Change Y coordinate");
-        Label label = new Label("Enter Y coordinate:");
+        changeWidthWindow.setTitle("Change Width");
+        Label label = new Label("Enter Width:");
         TextField inputField = new TextField();
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(e -> {
             String userInput = inputField.getText();
             changeWidthWindow.close();
-
             if(currentSelectItem.getValue() instanceof Item && userInput!=null){
                 Item item = (Item)currentSelectItem.getValue();
                 item.setWidth(Double.parseDouble(userInput));
@@ -326,8 +317,8 @@ public class Controller implements Initializable {
     public void changeHeight(){
         Stage changeHeightWindow = new Stage();
         changeHeightWindow.initModality(Modality.APPLICATION_MODAL);
-        changeHeightWindow.setTitle("Change Y coordinate");
-        Label label = new Label("Enter Y coordinate:");
+        changeHeightWindow.setTitle("Change Height");
+        Label label = new Label("Enter Height:");
         TextField inputField = new TextField();
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(e -> {
@@ -359,10 +350,71 @@ public class Controller implements Initializable {
     //pops up a window that let user input name,price,x,y,width,height and create a Item class object based on that data
     // then it will add it onto a TreeItem, the it will add this treeItem as Children of selected Item
     public void addItem(){
+        Stage changeNameWindow = new Stage();
+        changeNameWindow.initModality(Modality.APPLICATION_MODAL);
+        changeNameWindow.setTitle("AddItem");
+        Label labelName = new Label("Enter Name:");
+        TextField inputNameField = new TextField();
+        Label labelX = new Label("Enter XCord:");
+        TextField inputXField = new TextField();
+        Label labelY = new Label("Enter Ycord:");
+        TextField inputYField = new TextField();
+        Label labelWidth = new Label("Enter Width:");
+        TextField inputWidthField = new TextField();
+        Label labelHeight = new Label("Enter Height:");
+        TextField inputHeightField = new TextField();
+        Label labelPrice = new Label("Enter Price:");
+        TextField inputPriceField = new TextField();
 
+
+        Button submitButton = new Button("Submit");
+        try {
+
+            submitButton.setOnAction(e -> {
+                double xCordInput =0;
+                double yCordInput =0;
+                double heightInput =0;
+                double widthInput =0;
+                double priceInput =0;
+
+                String nameInput = inputNameField.getText();
+                xCordInput = Double.parseDouble(inputXField.getText());
+                yCordInput = Double.parseDouble(inputYField.getText());
+                heightInput = Double.parseDouble(inputHeightField.getText());
+                widthInput = Double.parseDouble(inputWidthField.getText());
+                priceInput = Double.parseDouble(inputPriceField.getText());
+                changeNameWindow.close();
+
+                if (nameInput != null && xCordInput != 0 && yCordInput != 0 && heightInput != 0 && widthInput!= 0 && priceInput != 0) {
+                   Item item = new Item(nameInput,xCordInput,yCordInput,heightInput,widthInput,priceInput);
+                    TreeItem newItem = new TreeItem(item);
+
+                   currentSelectItem.getChildren().add(newItem);
+                   this.visualAchor.getChildren().add(item.getItemLable());
+                   this.visualAchor.getChildren().add(item.getRect());
+
+                    selectItem();
+                }
+            });
+
+
+            VBox layout = new VBox(10, labelName, inputNameField,labelX,inputXField,labelY,inputYField,labelHeight,inputHeightField,labelWidth,inputWidthField,labelPrice,inputPriceField, submitButton);
+            layout.setAlignment(Pos.CENTER);
+
+            Scene scene = new Scene(layout, 250, 750);
+            changeNameWindow.setScene(scene);
+            changeNameWindow.showAndWait();
+        }
+        catch(Exception ex){
+            System.out.println("Something wrong within user's input");
+            ex.printStackTrace();
+        }
     }
     public void deleteItem(){
         if(currentSelectItem!=null){
+            Item deleteItem = (Item)currentSelectItem.getValue();
+            this.visualAchor.getChildren().remove(deleteItem.getRect());
+            this.visualAchor.getChildren().remove(deleteItem.getItemLable());
             currentSelectItem.getParent().getChildren().remove(currentSelectItem);
         }
     }

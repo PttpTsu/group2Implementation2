@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="810.0" maxWidth="1042.0" minHeight="727.0" minWidth="942.0" prefHeight="810.0" prefWidth="1042.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group2.group2remake.Controller">
+<VBox alignment="CENTER" maxHeight="847.0" maxWidth="1042.0" minHeight="741.0" minWidth="942.0" prefHeight="741.0" prefWidth="1042.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group2.group2remake.Controller">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -46,9 +46,9 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="257.0" prefWidth="181.0">
                            <children>
-                              <Button layoutX="4.0" layoutY="161.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="80.0" text="Launch" />
-                              <Button layoutX="97.0" layoutY="160.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="80.0" text="Visit" />
-                              <Button layoutX="185.0" layoutY="161.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="80.0" text="Scan" />
+                              <Button layoutX="4.0" layoutY="76.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="80.0" text="Launch" />
+                              <Button layoutX="96.0" layoutY="74.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="80.0" text="Visit" />
+                              <Button layoutX="198.0" layoutY="74.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="80.0" text="Scan" />
                               <Text layoutX="124.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drone" />
                            </children></AnchorPane>
                     </items>
@@ -57,12 +57,12 @@
             </AnchorPane>
           <AnchorPane fx:id="visualAchor" minHeight="0.0" minWidth="0.0" prefHeight="685.0" prefWidth="566.0">
                <children>
-                  <ImageView fitHeight="662.0" fitWidth="700.0" layoutX="28.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="664.0" fitWidth="673.0" layoutX="26.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/grid.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="droneImage" fitHeight="60.0" fitWidth="43.0" layoutX="335.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="droneImage" fitHeight="60.0" fitWidth="43.0" layoutX="335.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/drone.png" />
                      </image>
