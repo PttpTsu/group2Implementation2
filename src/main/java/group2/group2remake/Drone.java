@@ -153,10 +153,10 @@ public class Drone {
                     this.Position[0] += stepSizeX;
                     this.Position[1] += stepSizeY;
 
-                    if(this.indicator.getLayoutX()>19&&this.indicator.getLayoutX()<217){
+                    if(this.indicator.getLayoutX()>9&&this.indicator.getLayoutX()<661){
                         this.indicator.setLayoutX(this.indicator.getLayoutX()+stepSizeX);
                     }
-                    if (this.indicator.getLayoutY() > 35 && this.indicator.getLayoutY() < 233) {
+                    if (this.indicator.getLayoutY() > -2 && this.indicator.getLayoutY() < 650) {
                         this.indicator.setLayoutY(this.indicator.getLayoutY() + (stepSizeY*(-1)));
                     }
                     // Optionally update the visualization of the drone here
@@ -188,76 +188,12 @@ public class Drone {
      * or the method inside is called but never taken effect on current indicator
      * this function looks simple but felt cursed when implementing */
     public void patrol(int i) {
-        double[][] pointsOfPatrol = new double[4][2];
-        pointsOfPatrol[0] = new double[]{-99, 99};
-        pointsOfPatrol[1] = new double[]{99, 99};
-        pointsOfPatrol[2] = new double[]{99, -99};
-        pointsOfPatrol[3] = new double[]{-99, -99};
 
-
-        if(i>=pointsOfPatrol.length){
-            return;
-        }
-        else {
-            goTo(pointsOfPatrol[i], i);
-        }
     }
 
     //following is new goTo Method used by patrol only, do not use this if you don't want problem
     public void goTo(double[] destination, int i){
 
-        double disX = Math.abs((destination[0] - this.Position[0]));
-        double disY = Math.abs((destination[1] - this.Position[1]));
-        double length = Math.sqrt(disX*disX+disY*disY);
-
-        int xDirection;
-        int yDirection;
-        if(destination[0]<=0){
-            xDirection = -1;
-        } else {
-            xDirection = 1;
-        }
-        if(destination[1]<=0){
-            yDirection =-1;
-        } else {
-            yDirection = 1;
-        }
-        int numSteps = (int)(10*(length/constantSpeed));
-        double stepSizeX = disX / numSteps*xDirection;
-        double stepSizeY = disY / numSteps*yDirection;
-
-        if (length == 0 || numSteps == 0) {
-            System.out.println("Length or NumSteps is zero, cannot execute path");
-            return;
-        }
-
-        // Using JavaFX Timeline for animation
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(numSteps);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10), // Duration per step (adjust as needed)
-                event -> {
-                    // Update position
-                    this.Position[0] += stepSizeX;
-                    this.Position[1] += stepSizeY;
-                  /*
-                      for dubugging:
-                      System.out.println(this.indicator.getLayoutX()+","+this.indicator.getLayoutY());
-                    System.out.println("!"+this.Position[0]+","+this.Position[1]);*/
-                    if(this.indicator.getLayoutX()>19&&this.indicator.getLayoutX()<217){
-                        this.indicator.setLayoutX(this.indicator.getLayoutX()+(stepSizeX));
-                    }
-                    if (this.indicator.getLayoutY() > 35 && this.indicator.getLayoutY() < 233) {
-                        this.indicator.setLayoutY(this.indicator.getLayoutY() + (stepSizeY*(-1)));
-                    }
-                    // Optionally update the visualization of the drone here
-
-                }));
-
-        timeline.setOnFinished(e -> {
-            System.out.println("I FINISHED");
-            this.patrol(i+1);
-        });
-        timeline.play();
 
     }
 
